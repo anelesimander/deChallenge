@@ -42,7 +42,7 @@ def get_user_stats(user_id, date=None):
         query = "select session_duration,login_year,login_month,login_day from session where user_id==? order by login_timestamp asc"
         cursor.execute(query, (user_id,))
         user_data = [(data[0], data[1], data[2],data[3]) for data in cursor.fetchall()]
-        since_last_login=datetime.datetime.utcfromtimestamp(last_log_date).day-atetime.datetime.utcfromtimestamp(user_data[len(user_data)-1]).day
+        since_last_login=datetime.datetime.utcfromtimestamp(last_log_date).day-user_data[len(user_data)-1][3]
 
     if not user_data:
         return {'message': 'User stats not found'}
@@ -197,19 +197,19 @@ def game_statistic(date=None,country=None):
 
 
 if __name__ == '__main__':
-    # last_log_date=1274573468
-    # user_id_input = input("Enter user ID: ")
-    # date_input=input("Enter date like yyyy.mm.dd :")
-    # date = date_input if date_input else None
-    # user_stats = get_user_stats(user_id_input,date)
-    # print("User Stats:")
-    # print(user_stats)
-
-    country_input = input("Enter country: ")
-    country=country_input if country_input else None
+    last_log_date=1274573468
+    user_id_input = input("Enter user ID: ")
     date_input=input("Enter date like yyyy.mm.dd :")
     date = date_input if date_input else None
-    game_stats=game_statistic(date,country)
-    print("Game Stats:")
-    print(game_stats)
+    user_stats = get_user_stats(user_id_input,date)
+    print("User Stats:")
+    print(user_stats)
+
+    # country_input = input("Enter country: ")
+    # country=country_input if country_input else None
+    # date_input=input("Enter date like yyyy.mm.dd :")
+    # date = date_input if date_input else None
+    # game_stats=game_statistic(date,country)
+    # print("Game Stats:")
+    # print(game_stats)
 
